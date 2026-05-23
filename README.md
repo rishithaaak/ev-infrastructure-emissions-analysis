@@ -65,11 +65,3 @@ Filtering data specifically for high-speed DC Fast equipment highlights that fas
 ### Geographic Concentration Metrics
 The aggregated data registers a severe geographic imbalance in overall infrastructure volume across the country, where the top ten states maintain a disproportionate share of total active charging assets, led heavily by the state of California.
 
----
-
-## File System Structure
-
-* **data/**: Directory containing raw data downloads and processed pipeline dataframes.
-* **notebooks/**: Directory containing Python ingestion engines, scraping algorithms, and modeling routines.
-* **requirements.txt**: Plain text tracking manifest documenting Python library dependencies.
-* **README.md**: Standard documentation rendering page.
