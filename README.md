@@ -2,7 +2,6 @@
 
 This repository contains a data analytics framework designed to evaluate the relationship between public electric vehicle (EV) charging infrastructure deployment, regional consumer EV adoption, and total transportation sector carbon dioxide emissions across the United States. The project consolidates a heavy tabular location dataset, web-scraped market distribution registries, and structured REST API environmental indexes to determine regional asset coverage and evaluate net emission correlations.
 
----
 
 ## Technical Stack
 
@@ -11,7 +10,6 @@ This repository contains a data analytics framework designed to evaluate the rel
 * **Data Ingestion Subsystem:** BeautifulSoup (HTML Document Parsing), Requests (REST API Integration)
 * **Statistical Modeling & Graphics:** Scikit-Learn (Linear and Non-Linear Regression), Matplotlib, Seaborn
 
----
 
 ## Data Engineering and Core Operations
 
@@ -28,7 +26,7 @@ To guarantee structural alignment across all inputs, the data processing workflo
 * **Operational Status Constraints:** Future planned locations are removed from the tabular data matrices to prevent artificial capacity skews, leaving only verified operational infrastructure.
 * **Text Array Sanitization:** Footnotes, punctuation flags, and comma thousands separators are removed from the web-scraped table string elements via regular expressions before casting the fields to integers.
 
----
+
 
 ## Analytical Modeling and Empirical Results
 
@@ -46,7 +44,7 @@ A K-Nearest Neighbors Regressor (K=3) mapped total charging nodes and fleet volu
 * **Coefficient of Determination (R²):** 0.332
 * **Analysis:** The low fit metric confirms that state-level transportation carbon output cannot be modeled through a function of electric vehicle deployment parameters alone. Total net emission metrics remain structurally tied to broader macro variables, including annual vehicle miles traveled, commercial freight network volume, and the generation fuel mix of regional utility grids.
 
----
+
 
 ## Strategic System Metrics
 
