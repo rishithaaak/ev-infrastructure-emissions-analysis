@@ -70,6 +70,6 @@ The aggregated data registers a severe geographic imbalance in overall infrastru
 ## File System Structure
 
 * **data/**: Directory containing raw data downloads and processed pipeline dataframes.
-* **src/**: Directory containing Python ingestion engines, scraping algorithms, and modeling routines.
+* **notebooks/**: Directory containing Python ingestion engines, scraping algorithms, and modeling routines.
 * **requirements.txt**: Plain text tracking manifest documenting Python library dependencies.
 * **README.md**: Standard documentation rendering page.
