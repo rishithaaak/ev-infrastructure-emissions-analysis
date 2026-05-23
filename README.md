@@ -33,4 +33,43 @@ To join the datasets reliably without breaking the models, I used Pandas to hand
 
 ## Modeling and Results
 
-Using the final merged Pandas DataFrame, I split the data to run two separate predictive models to
+Using the final merged Pandas DataFrame, I split the data to run two separate predictive models to test our core hypotheses.
+
+### Linear Model: Public Chargers vs. EV Adoption
+I used an Ordinary Least Squares (OLS) Linear Regression model to see if public charging port availability reliably predicts EV adoption.
+
+* **R² Score:** 0.988
+* **Takeaway:** The model shows an incredibly tight linear fit. The slope indicates that, on average, every single public charging port deployed in a state corresponds to roughly 32 registered electric vehicles.
+
+### Non-Linear Model: Electrification Metrics vs. CO2 Emissions
+I trained a K-Nearest Neighbors (KNN) Regressor using total ports and EV registrations as input features to try and predict a state's total transportation CO2 emissions.
+
+* **R² Score:** 0.332
+* **Takeaway:** The low R² score highlights that state-level transportation emissions cannot be predicted just by looking at EV adoption and charging ports. Other massive variables—like total vehicle miles traveled, commercial freight volume, and the carbon intensity of the local power grid—play a much bigger role in a state's net carbon footprint.
+
+---
+
+## Key Infrastructure Insights
+
+### 1. Port Distribution by Charger Type
+Using Pandas aggregation, I found that the vast majority of public infrastructure is dominated by Level 2 chargers, which are best for overnight or workplace charging rather than rapid highway travel.
+* **Level 1 Ports:** 38,938 (28.92%)
+* **Level 2 Ports:** 79,306 (58.90%)
+* **DC Fast Nodes:** 16,390 (12.17%)
+
+### 2. Where are DC Fast Chargers Placed?
+When filtering specifically for rapid DC Fast Charging, Seaborn plots revealed that infrastructure is heavily concentrated around commercial shopping centers and vehicle transit points:
+* **Shopping Malls:** 80.19% of stations include DC Fast ports
+* **Shopping Centers:** 43.30% of stations include DC Fast ports
+* **Car Dealerships:** 31.67% of stations include DC Fast ports
+
+### 3. Geographic Concentration
+The data shows a massive geographic imbalance in infrastructure deployment. The top 10 states control a huge chunk of the nation's total charging capacity, heavily led by California.
+
+---
+
+## File Structure
+* **data/**: Local CSVs and processed API outputs
+* **src/**: Ingestion, scraping, and modeling scripts
+* **requirements.txt**: Project dependencies
+* **README.md**: Project documentation
