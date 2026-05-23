@@ -17,7 +17,7 @@ This project analyzes how electric vehicle (EV) charging infrastructure relates 
 The pipeline ingests data from three distinct sources, normalizes their formats, and joins them on standard U.S. State abbreviations.
 
 ### 1. Source Datasets
-* **Alternative Fuel Stations (AFDC Tabular Data):** 96,448 rows $	imes$ 75 columns (.csv). Contains tracking data for alternative refueling stations, charging port levels (Level 1, Level 2, DC Fast), connector types, and network operators.
+* **Alternative Fuel Stations (AFDC Tabular Data):** 96,448 rows, 75 columns (.csv). Contains tracking data for alternative refueling stations, charging port levels (Level 1, Level 2, DC Fast), connector types, and network operators.
 * **State EV Registrations (AFDC Web Data):** Extracted via `BeautifulSoup` from the AFDC state registration table to gather raw consumer EV ownership counts by state.
 * **Transportation Emissions (EIA REST API):** Gathered via the Energy Information Administration (EIA) SEDS API. Returns annual state-level transportation energy statistics and carbon outputs in JSON format.
 
