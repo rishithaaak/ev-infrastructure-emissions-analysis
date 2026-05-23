@@ -1,75 +1,75 @@
-# EV Infrastructure, Adoption, and Carbon Emissions Analysis
+# Electric Vehicle Infrastructure and Regional Emissions Analysis
 
-This project looks at how electric vehicle (EV) charging infrastructure relates to state-level EV adoption and transportation CO2 emissions across the US. I combined a large tabular dataset, web-scraped table data, and live REST API environmental metrics to see where infrastructure gaps exist and whether adding more chargers actually correlates with lower emissions.
+This repository contains a data analytics framework designed to evaluate the relationship between public electric vehicle (EV) charging infrastructure deployment, regional consumer EV adoption, and total transportation sector carbon dioxide emissions across the United States. The project consolidates a heavy tabular location dataset, web-scraped market distribution registries, and structured REST API environmental indexes to determine regional asset coverage and evaluate net emission correlations.
 
 ---
 
 ## Technical Stack
-* **Language:** Python
-* **Data Core (Pandas & NumPy):** Used to load raw files, handle heavy data-cleaning matrices, filter features, and merge separate tables into a single database.
-* **Visualization (Seaborn & Matplotlib):** Used to plot trends and analyze statistical distributions directly out of our dataframes.
-* **Machine Learning (Scikit-Learn):** Used for running Linear Regression and KNN Regressor models.
+
+* **Programming Language:** Python
+* **Data Management:** Pandas, NumPy
+* **Data Ingestion Subsystem:** BeautifulSoup (HTML Document Parsing), Requests (REST API Integration)
+* **Statistical Modeling & Graphics:** Scikit-Learn (Linear and Non-Linear Regression), Matplotlib, Seaborn
 
 ---
 
-## Data Pipeline & Cleaning with Pandas
+## Data Engineering and Core Operations
 
-The pipeline uses Pandas to pull data from three completely different sources, clean up their structural inconsistencies, and join them together using standard U.S. State abbreviations.
+The pipeline standardizes, processes, and matches records from three distinct data environments using standard U.S. State structural identifiers.
 
-### 1. The Datasets
-* **Alternative Fuel Stations:** A large CSV (96,448 rows) containing tracking data for alternative refueling stations. I parsed this into a Pandas DataFrame to isolate charger levels (Level 1, Level 2, DC Fast), connector types, and network operators.
-* **State EV Registrations:** Extracted via BeautifulSoup from the AFDC HTML table, then converted straight into a structured Pandas DataFrame to get raw consumer EV ownership counts by state.
-* **Transportation Emissions:** Gathered via the Energy Information Administration (EIA) SEDS API, which returns annual state-level transportation energy stats and carbon outputs. The nested JSON response was flattened directly into a DataFrame.
+### Data Environment Inventories
+* **Alternative Fuel Stations (Tabular):** An industry registry containing 96,448 infrastructure records documenting charging node classifications, port count attributes, hardware connector profiles, and administrative operator networks.
+* **State EV Registrations (Web-Scraped):** A state-by-state market summary extracted directly from the HTML structures of the Alternative Fuel Data Center table matrix.
+* **Transportation Emissions (API JSON Payload):** Long-term carbon tracking vectors queried programmatically from the Energy Information Administration (EIA) State Energy Data System.
 
-### 2. Cleaning and Fixing Inconsistencies
-To join the datasets reliably without breaking the models, I used Pandas to handle several major data quality issues:
-* **Handling Missing Port Counts:** For operational stations with blank or "N/A" entries in their port counts, I used a conditional row application to default the missing count to 1, preserving the location without introducing NaN errors.
-* **Status Filtering:** The raw data included future planned locations. I used Pandas string filtering to strip out planned sites and keep only existing, operational locations.
-* **String Sanitization:** Cleaned up formatting commas and footnotes from the scraped HTML registration tables using regular expressions (`.str.replace()`) so the values could be safely cast to integers.
-* **Unit Standardization (The Physics Fix):** The API returned emission values in mixed units (Billion Btu vs. Million Metric Tons of CO2). I applied a mathematical conversion factor across the DataFrame column to standardize everything into carbon emissions mass.
-* **The Master Merge:** Once all three dataframes were individually cleaned, I used a Pandas outer join to merge them together into a unified, state-by-state database (`merged_ev_data.csv`).
+### Cleaning Routines and Inconsistency Reductions
+To guarantee structural alignment across all inputs, the data processing workflow corrects several systemic formatting variances using Pandas:
+* **Asset Allocation Defaults:** For active, existing refueling nodes with missing data points or character strings in their terminal hardware columns, a default base unit value of 1 is applied to preserve the facility's location record.
+* **Operational Status Constraints:** Future planned locations are removed from the tabular data matrices to prevent artificial capacity skews, leaving only verified operational infrastructure.
+* **Text Array Sanitization:** Footnotes, punctuation flags, and comma thousands separators are removed from the web-scraped table string elements via regular expressions before casting the fields to integers.
 
 ---
 
-## Modeling and Results
+## Analytical Modeling and Empirical Results
 
-Using the final merged Pandas DataFrame, I split the data to run two separate predictive models to test our core hypotheses.
+Using the completed dataset, two distinct validation pipelines were executed to test the underlying system behavior.
 
-### Linear Model: Public Chargers vs. EV Adoption
-I used an Ordinary Least Squares (OLS) Linear Regression model to see if public charging port availability reliably predicts EV adoption.
+### Linear Regression Framework: Infrastructure Density vs. Adoption Volume
+An Ordinary Least Squares model evaluated whether public charging availability acts as a reliable predictor for state-level vehicle procurement.
 
-* **R² Score:** 0.988
-* **Takeaway:** The model shows an incredibly tight linear fit. The slope indicates that, on average, every single public charging port deployed in a state corresponds to roughly 32 registered electric vehicles.
+* **Coefficient of Determination (R²):** 0.988
+* **Analysis:** The model exhibits an exceptionally strong linear relationship. The calculated slope establishes that the deployment of a single public charging port statistically corresponds with an approximate increase of 32 localized vehicle registrations.
 
-### Non-Linear Model: Electrification Metrics vs. CO2 Emissions
-I trained a K-Nearest Neighbors (KNN) Regressor using total ports and EV registrations as input features to try and predict a state's total transportation CO2 emissions.
+### Instance-Space Modeling: Fleet Electrification vs. Macro Sector Emissions
+A K-Nearest Neighbors Regressor (K=3) mapped total charging nodes and fleet volumes against total annual transportation emissions to evaluate direct carbon containment.
 
-* **R² Score:** 0.332
-* **Takeaway:** The low R² score highlights that state-level transportation emissions cannot be predicted just by looking at EV adoption and charging ports. Other massive variables—like total vehicle miles traveled, commercial freight volume, and the carbon intensity of the local power grid—play a much bigger role in a state's net carbon footprint.
-
----
-
-## Key Infrastructure Insights
-
-### 1. Port Distribution by Charger Type
-Using Pandas aggregation, I found that the vast majority of public infrastructure is dominated by Level 2 chargers, which are best for overnight or workplace charging rather than rapid highway travel.
-* **Level 1 Ports:** 38,938 (28.92%)
-* **Level 2 Ports:** 79,306 (58.90%)
-* **DC Fast Nodes:** 16,390 (12.17%)
-
-### 2. Where are DC Fast Chargers Placed?
-When filtering specifically for rapid DC Fast Charging, Seaborn plots revealed that infrastructure is heavily concentrated around commercial shopping centers and vehicle transit points:
-* **Shopping Malls:** 80.19% of stations include DC Fast ports
-* **Shopping Centers:** 43.30% of stations include DC Fast ports
-* **Car Dealerships:** 31.67% of stations include DC Fast ports
-
-### 3. Geographic Concentration
-The data shows a massive geographic imbalance in infrastructure deployment. The top 10 states control a huge chunk of the nation's total charging capacity, heavily led by California.
+* **Coefficient of Determination (R²):** 0.332
+* **Analysis:** The low fit metric confirms that state-level transportation carbon output cannot be modeled through a function of electric vehicle deployment parameters alone. Total net emission metrics remain structurally tied to broader macro variables, including annual vehicle miles traveled, commercial freight network volume, and the generation fuel mix of regional utility grids.
 
 ---
 
-## File Structure
-* **data/**: Local CSVs and processed API outputs
-* **src/**: Ingestion, scraping, and modeling scripts
-* **requirements.txt**: Project dependencies
-* **README.md**: Project documentation
+## Strategic System Metrics
+
+### Hardware Node Distribution by Power Class
+Pandas descriptive aggregation establishes that the domestic public infrastructure network is predominantly composed of destination hardware rather than high-speed transit equipment:
+* **Level 1 Charging Ports:** 38,938 (28.92%)
+* **Level 2 Charging Ports:** 79,306 (58.90%)
+* **DC Fast Charging Ports:** 16,390 (12.17%)
+
+### Commercial Point-of-Interest Capture Rates
+Filtering data specifically for high-speed DC Fast equipment highlights that fast-charging resources are heavily concentrated within retail destination hubs:
+* **Shopping Malls:** 80.19% of stations contain fast-charging infrastructure
+* **Shopping Centers:** 43.30% of stations contain fast-charging infrastructure
+* **Automotive Dealership Networks:** 31.67% of stations contain fast-charging infrastructure
+
+### Geographic Concentration Metrics
+The aggregated data registers a severe geographic imbalance in overall infrastructure volume across the country, where the top ten states maintain a disproportionate share of total active charging assets, led heavily by the state of California.
+
+---
+
+## File System Structure
+
+* **data/**: Directory containing raw data downloads and processed pipeline dataframes.
+* **src/**: Directory containing Python ingestion engines, scraping algorithms, and modeling routines.
+* **requirements.txt**: Plain text tracking manifest documenting Python library dependencies.
+* **README.md**: Standard documentation rendering page.
